@@ -8,6 +8,7 @@ A comprehensive Python toolkit for analyzing YouTube communities, performing sen
 - **Community Detection**: Detect communities in YouTube comment networks using Louvain algorithm
 - **Influencer Identification**: Identify key influencers using multiple centrality metrics and composite scoring
 - **Network Visualization**: Generate network plots, community distributions, and degree distributions
+- **Predictive Analysis**: Simple forecasting for engagement, community size, and influencer trajectories (linear regression)
 - **REST API**: Access functionality via REST API endpoints (optional)
 - **Export**: Save results in multiple formats (CSV, GEXF, JSON, PNG)
 
@@ -48,6 +49,7 @@ pip install -r requirements.txt
 
 This will install all required packages including:
 - NetworkX for network analysis
+- scikit-learn for lightweight forecasting
 - FastAPI for REST API (optional)
 - VADER and TextBlob for sentiment analysis
 - Matplotlib for visualization
@@ -189,6 +191,24 @@ analyzer = InfluencerAnalyzer(graph)
 analyzer.calculate_centrality_metrics()
 analyzer.calculate_composite_score()
 top_influencers = analyzer.get_top_influencers(n=10)
+
+# Predictive Analysis (simple forecasting example)
+from src.predictive import PredictiveAnalyzer
+
+history = [
+    {"published_at": "2024-01-01", "like_count": 10},
+    {"published_at": "2024-01-02", "like_count": 12},
+    {"published_at": "2024-01-03", "like_count": 15},
+]
+
+predictive = PredictiveAnalyzer(freq="D")
+forecast = predictive.forecast_engagement(
+    history,
+    horizon=7,
+    time_field="published_at",
+    value_field="like_count"
+)
+print(forecast)
 ```
 
 ### REST API (Optional)
@@ -216,6 +236,7 @@ social-network-analysis/
 │   ├── sentiment/              # Sentiment analysis module
 │   ├── influencer/             # Influencer identification module
 │   ├── community/              # Community analysis module
+│   ├── predictive/             # Predictive analysis module
 │   ├── database/               # Database operations
 │   ├── utils/                  # Utility functions
 │   └── ...
